@@ -1,19 +1,46 @@
 
-.inputContainer{
+.formContainer{
   text-align: center;
 }
 
 .userInput{
   font-size: 20px;
   color: #525464;
-  width: 100px;
+  width: 300px;
   text-align: center;
+  padding: 10px;
+}
+
+.userInputMathOperator{
+  width: 5%;
+  height: 20px;
+  padding: 10px;
+  font-size: 20px;  
+  text-align: center;
+}
+
+.inputContainer{
+  padding: 10px
 }
 
 .displayUserInput{
   text-align: center;
   font-size: 35px;
   font-weight: bold;
+}
+.calculateButtonContainer{
+  margin-top: 5%;
+}
+.calculateButton{
+  padding: 10px;
+  border: 1px solid #ff5e64;
+  border-radius: 7px;
+  font-size: 20px
+}
+
+.calculateButton:hover{
+  background-color: #ff5e64;
+  color: #ffffff;
 }
 
 .result{

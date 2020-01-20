@@ -11,6 +11,7 @@ class CalculatorComponent extends Component{
             error : ''
         }
         this.handleChange = this.handleChange.bind(this);
+        this.checkInputForValidOperator = this.checkInputForValidOperator.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     
@@ -21,78 +22,81 @@ class CalculatorComponent extends Component{
         })
     }
 
-   
+    checkInputForValidOperator(event){
+        const {value} = event.target, 
+                RegEx = new RegExp(/^[+-/*]*$/)
+
+        if (RegEx.test(value)){
+            this.setState({
+                mathOperator : value
+            })
+        }else{
+            this.setState({
+                error: 'Please enter a valid math operator!'
+            })
+        }
+    }
+
+  
     handleSubmit(e){
         e.preventDefault();
 
         const firstInputAsInteger = Number(this.state.firstNumber), 
-        secondInputAsInteger = Number(this.state.secondNumber)      
+        secondInputAsInteger = Number(this.state.secondNumber),        
+        equation = eval(firstInputAsInteger + this.state.mathOperator + secondInputAsInteger)
         
-        switch(this.state.mathOperator){
-            case '+':
-                this.setState({
-                    result: firstInputAsInteger +  secondInputAsInteger
-                })
-                break;
-            case '-': 
-                this.setState({
-                    result: firstInputAsInteger -  secondInputAsInteger
-                })
-                break;
-            case '/':
-                this.setState({
-                    result: firstInputAsInteger /  secondInputAsInteger
-                })
-                break;
-            case '*':
-                this.setState({
-                    result: firstInputAsInteger *  secondInputAsInteger
-                })
-                break;
-            default: 
-                this.setState({
-                    error: 'Oops! Looks like something bad happened.'
-                })
-        }
+        this.setState({
+            result: equation
+        })
         
     }
     
     render(){
-        
+
             return(
                 <div>
-                <form id="calculatorForm"className="inputContainer" onSubmit={this.handleSubmit}>
-                    <input 
-                        className="userInput"
-                        id="formInput"
-                        type="number" 
-                        name="firstNumber" 
-                        value={this.state.firstNumber} 
-                        placeholder="Enter a number" 
-                        onChange={this.handleChange}
-                        />
+                <form id="calculatorForm" className="formContainer" onSubmit={this.handleSubmit}>
+                    <div> 
+                        <span className="inputContainer">
+                            <input 
+                                className="userInput"
+                                id="formInput"
+                                type="number" 
+                                name="firstNumber" 
+                                value={this.state.firstNumber} 
+                                placeholder="Enter a number" 
+                                onChange={this.handleChange}
+                                />
+                        </span>
 
-                    <input
-                        className="userInput"
-                        id="formInput"
-                        type="text"
-                        name="mathOperator"
-                        value={this.state.mathOperator}
-                        placeholder="+ - / *"
-                        onChange={this.handleChange}
-                        />
+                        <span className="inputContainer">
+                            <input
+                                className="userInputMathOperator"
+                                id="formInput"
+                                maxLength="1"
+                                type="text"
+                                name="mathOperator"
+                                value={this.state.mathOperator}
+                                placeholder="+ - / *"
+                                onChange={this.checkInputForValidOperator}
+                                />
+                        </span>
 
-                    <input
-                        className="userInput"
-                        id="formInput"
-                        type="number"
-                        name="secondNumber"
-                        value={this.state.secondNumber}
-                        placeholder="Enter a second number"
-                        onChange={this.handleChange}
-                        />
-                    
-                    <button>Calculate</button>
+                        <span className="inputContainer">
+                            <input
+                                className="userInput"
+                                id="formInput"
+                                type="number"
+                                name="secondNumber"
+                                value={this.state.secondNumber}
+                                placeholder="Enter a second number"
+                                onChange={this.handleChange}
+                                />
+                        </span>
+                    </div>
+                    <div className="calculateButtonContainer">
+                        <button className="calculateButton">Calculate</button>
+                    </div>
                 </form>
 
                 <div>
